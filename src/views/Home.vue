@@ -1,12 +1,14 @@
+<!-- ParentComponent.vue -->
 <template>
   <div>
     <form @submit.prevent="submitForm">
-      <label for="inputField">Enter Data:</label>
-      <input v-model="formData" type="text" id="inputField" />
+      <label for="inputValue">Enter Value:</label>
+      <input v-model="inputValue" type="text" id="inputValue" />
       <button type="submit">Submit</button>
     </form>
-    
-    <Dashboard :childData="formData" :childDataSubmitted="formSubmitted" />
+
+    <!-- Render ChildComponent only when form is submitted -->
+    <Dashboard v-if="formSubmitted" :childProp="inputValue" />
   </div>
 </template>
 
@@ -16,27 +18,18 @@ import Dashboard from "/src/components/Dashboard.vue";
 export default {
   data() {
     return {
-      formData: "",
+      inputValue: '',
       formSubmitted: false,
     };
   },
-  components: {
-    Dashboard
-  },
   methods: {
-    async submitForm() {
-      // Perform form submission logic
-      // For example, you might want to save the form data to a database
-
-      // Update the formSubmitted flag to notify child component
+    submitForm() {
+      // Handle form submission logic if needed
       this.formSubmitted = true;
-
-      // If you want to notify the child component of the form submission,
-      // you can pass the data through the childDataSubmitted prop
-      // this.$emit('formSubmitted', this.formData);
-
-      // Now you can fetch the subcollection data in the child component
-    }
-  }
+    },
+  },
+  components: {
+    Dashboard,
+  },
 };
 </script>
