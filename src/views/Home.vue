@@ -40,13 +40,32 @@ export default {
         querySnapshot.forEach(doc => {
           users.value.push({
             id: doc.id,
-            ...doc.data()
+            userId: doc.data().userId,
+            userEmail: doc.data().userEmail,
+            timeCreated: formatTimestamp(doc.data().timeCreated),
           });
         });
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     });
+
+    // Function to format Firestore timestamp
+    function formatTimestamp(timestamp) {
+      const date = timestamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
+      return formatDate(date);
+    }
+
+    // Function to format JavaScript Date object
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
 
     return { users };
   },
