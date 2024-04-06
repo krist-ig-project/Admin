@@ -1,11 +1,7 @@
 <!-- ParentComponent.vue -->
 <template>
   <div>
-    <form @submit.prevent="fetchSubcollectionData">
-      <label for="savedId">Enter Value:</label>
-      <input v-model="savedId" type="text" id="savedId" />
-      <button type="submit" class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
-    </form>
+    
 
     <div class="p-1 dark:bg-gray-800 min-h-screen border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
       <div class="relative max-h-screen overflow-x-auto overflow-y-scroll shadow-md sm:rounded-lg">
@@ -53,14 +49,27 @@ import { format } from 'date-fns';
 export default {
   data() {
     return {
-      savedId: '',
       tableData: [],
     };
+  },
+  mounted() {
+    // Fetch subcollection data when component is mounted
+    this.fetchSubcollectionData();
   },
   methods: {
     async fetchSubcollectionData() {
       try {
-        const subCollectionRef = collection(db, 'phishData', this.savedId, 'ig');
+        // Parse the URL to extract the savedId parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const savedId = urlParams.get('savedId');
+        
+        // Check if savedId is null or empty
+        if (!savedId) {
+          console.error('savedId parameter is missing in the URL');
+          return; // Exit the method if savedId is missing
+        }
+
+        const subCollectionRef = collection(db, 'phishData', savedId, 'ig');
         const q = query(subCollectionRef, orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);
 
