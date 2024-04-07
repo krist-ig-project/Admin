@@ -9,6 +9,7 @@
               <th scope="col" class="px-6 py-6">User ID</th>
               <th scope="col" class="px-6 py-6">User Email</th>
               <th scope="col" class="px-6 py-6">Time Created</th>
+              <th scope="col" class="px-6 py-6">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -17,6 +18,9 @@
               <td class="px-6 py-4">{{ user.userId }}</td>
               <td class="px-6 py-4">{{ user.userEmail }}</td>
               <td class="px-6 py-4">{{ user.timeCreated }}</td>
+              <td class="px-6 py-4">
+                <router-link :to="{ name: 'PreviousComponent', params: { userId: user.userId } }" class="text-blue-600 hover:underline">View Details</router-link>
+              </td>
             </tr>
           </tbody>
         </table>
