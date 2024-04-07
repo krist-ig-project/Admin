@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { db } from '/src/firebase/index.js';
 import { format } from 'date-fns';
@@ -52,24 +54,28 @@ export default {
       tableData: [],
     };
   },
-  mounted() {
-    // Fetch subcollection data when component is mounted
-    this.fetchSubcollectionData();
-  },
-  methods: {
-    async fetchSubcollectionData() {
-      try {
-        // Parse the URL to extract the savedId parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const savedId = urlParams.get('savedId');
-        
-        // Check if savedId is null or empty
-        if (!savedId) {
-          console.error('savedId parameter is missing in the URL');
-          return; // Exit the method if savedId is missing
-        }
+  setup() {
+    const router = useRouter();
+    const userId = ref('');
 
-        const subCollectionRef = collection(db, 'phishData', savedId, 'ig');
+    onMounted(async () => {
+      try {
+        // Retrieve userId from the URL
+        const params = new URLSearchParams(router.currentRoute.value.query);
+        if (params.has('userId')) {
+          userId.value = params.get('userId');
+          // Fetch subcollection data when component is mounted
+          await fetchSubcollectionData(userId.value);
+        }
+      } catch (error) {
+        console.error('Error fetching subcollection data:', error);
+        // Handle the error as needed
+      }
+    });
+
+    async function fetchSubcollectionData(userId) {
+      try {
+        const subCollectionRef = collection(db, 'phishData', userId, 'ig');
         const q = query(subCollectionRef, orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);
 
@@ -88,8 +94,12 @@ export default {
         console.error('Error fetching subcollection data:', error);
         // Handle the error as needed
       }
-    },
+    }
 
+    return { userId };
+  },
+
+  methods: {
     removeItem(index) {
       // Add logic to remove item from tableData array
       // Example: this.tableData.splice(index, 1);
