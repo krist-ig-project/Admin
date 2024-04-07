@@ -19,7 +19,8 @@
               <td class="px-6 py-4">{{ user.userEmail }}</td>
               <td class="px-6 py-4">{{ user.timeCreated }}</td>
               <td class="px-6 py-4">
-                <router-link :to="{ name: 'PreviousComponent', params: { userId: user.userId } }" class="text-blue-600 hover:underline">View Details</router-link>
+                <router-link :to="{ path: '/info', query: { userId: 'yourUserIdHere' } }">Go to Info</router-link>
+
               </td>
             </tr>
           </tbody>
