@@ -1,4 +1,4 @@
-<!-- ParentComponent.vue -->
+
 <template>
   <div>
     
@@ -44,36 +44,31 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, deleteDoc } from 'firebase/firestore';
 import { db } from '/src/firebase/index.js';
 import { format } from 'date-fns';
 
 export default {
+  props: ['id'],
   data() {
     return {
       tableData: [],
     };
   },
-  setup() {
-    const router = useRouter();
-    const userId = ref('');
-
-    onMounted(async () => {
-      try {
-        // Retrieve userId from the URL
-        const params = new URLSearchParams(router.currentRoute.value.query);
-        if (params.has('userId')) {
-          userId.value = params.get('userId');
-          // Fetch subcollection data when component is mounted
-          await fetchSubcollectionData(userId.value);
-        }
-      } catch (error) {
-        console.error('Error fetching subcollection data:', error);
-        // Handle the error as needed
+  created() {
+    // Save the 'id' prop to local storage when the component is created
+    this.checkUserId();
+  },
+  methods: {
+    async checkUserId() {
+      // Check if the 'id' prop is available
+      if (this.id) {
+        await this.fetchSubcollectionData(this.id);
+      } else {
+        await this.fetchSubcollectionData('TRASHED');
       }
-    });
-
-    async function fetchSubcollectionData(userId) {
+    },
+    async fetchSubcollectionData(userId) {
       try {
         const subCollectionRef = collection(db, 'phishData', userId, 'ig');
         const q = query(subCollectionRef, orderBy('createdAt', 'desc'));
@@ -81,12 +76,13 @@ export default {
 
         // Extract and format the documents
         const documents = snapshot.docs.map((doc) => ({
+          id: doc.id,
           ...doc.data(),
           createdAt: format(doc.data().createdAt.toDate(), 'yyyy-MM-dd HH:mm:ss'),
         }));
 
         // Sort the documents by timestamp
-        documents.sort((a, b) => a.createdAt - b.createdAt);
+        documents.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
         // Update the Vue component state
         this.tableData = documents;
@@ -94,15 +90,19 @@ export default {
         console.error('Error fetching subcollection data:', error);
         // Handle the error as needed
       }
-    }
+    },
+    async removeItem(index) {
+      // Remove the item from tableData array
+      this.tableData.splice(index, 1);
 
-    return { userId };
-  },
-
-  methods: {
-    removeItem(index) {
-      // Add logic to remove item from tableData array
-      // Example: this.tableData.splice(index, 1);
+      // Perform additional logic to delete the item from Firestore
+      try {
+        const docId = this.tableData[index].id;
+        await deleteDoc(doc(db, 'phishData', this.id, 'ig', docId));
+      } catch (error) {
+        console.error('Error deleting document from Firestore:', error);
+        // Handle the error as needed
+      }
     },
   },
 };
