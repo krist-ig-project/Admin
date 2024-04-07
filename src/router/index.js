@@ -6,7 +6,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/Home.vue')
+      component: () => import('../views/Home.vue'), 
+      props: (route) => ({ id: route.query.id }),
     },
     {
       path: '/info',
