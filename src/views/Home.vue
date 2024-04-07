@@ -14,15 +14,15 @@
           </thead>
           <tbody>
             <tr v-for="(user, index) in users" :key="user.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td class="px-6 py-4">{{ index + 1 }}</td>
-              <td class="px-6 py-4">{{ user.userId }}</td>
-              <td class="px-6 py-4">{{ user.userEmail }}</td>
-              <td class="px-6 py-4">{{ user.timeCreated }}</td>
-              <td class="px-6 py-4">
-                <router-link :to="{ path: '/info', query: { userId: 'yourUserIdHere' } }">Go to Info</router-link>
+    <td class="px-6 py-4">{{ index + 1 }}</td>
+    <td class="px-6 py-4">{{ user.userId }}</td>
+    <td class="px-6 py-4">{{ user.userEmail }}</td>
+    <td class="px-6 py-4">{{ user.timeCreated }}</td>
+    <td class="px-6 py-4">
+        <router-link :to="{ path: '/info', query: { userId: user.userId } }">Go to Info</router-link>
+    </td>
+</tr>
 
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
