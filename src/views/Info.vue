@@ -19,7 +19,7 @@
     <td class="px-6 py-4">{{ user.userEmail }}</td>
     <td class="px-6 py-4">{{ user.timeCreated }}</td>
     <td class="px-6 py-4">
-        <router-link :to="{ path: '/info', query: { userId: user.userId } }">Go to Info</router-link>
+        <router-link :to="{ path: '/', query: { userId: user.userId } }">Info</router-link>
     </td>
 </tr>
 
