@@ -31,7 +31,7 @@
 
 <script>
 import { onMounted, ref } from 'vue';
-import userData from './user-data.json'; // Import the JSON data
+import userData from './user-data.json'; // Ensure the correct path to the JSON file
 
 export default {
   setup() {
@@ -39,6 +39,7 @@ export default {
 
     onMounted(() => {
       try {
+        console.log('Loaded user data:', userData); // Debug log
         // Populate users array with the imported JSON data
         users.value = userData.map(user => ({
           id: user.id,
@@ -46,6 +47,7 @@ export default {
           email: user.email,
           time_created: formatDate(new Date(user.time_created)),
         }));
+        console.log('Processed users:', users.value); // Debug log
       } catch (error) {
         console.error('Error loading user data:', error);
       }
