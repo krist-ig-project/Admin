@@ -15,11 +15,11 @@
           <tbody>
             <tr v-for="(user, index) in users" :key="user.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td class="px-6 py-4">{{ index + 1 }}</td>
-              <td class="px-6 py-4">{{ user.userId }}</td>
-              <td class="px-6 py-4">{{ user.userEmail }}</td>
-              <td class="px-6 py-4">{{ user.timeCreated }}</td>
+              <td class="px-6 py-4">{{ user.user_id }}</td>
+              <td class="px-6 py-4">{{ user.email }}</td>
+              <td class="px-6 py-4">{{ user.time_created }}</td>
               <td class="px-6 py-4">
-                <router-link :to="{ path: '/', query: { id: user.userId } }">Info</router-link>
+                <router-link :to="{ path: '/', query: { id: user.user_id } }">Info</router-link>
               </td>
             </tr>
           </tbody>
@@ -30,24 +30,24 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'; // Assuming you're using Vue 3
+import { onMounted, ref } from 'vue';
+import userData from './user-data.json'; // Import the JSON data
 
 export default {
   setup() {
     const users = ref([]);
 
-    onMounted(async () => {
+    onMounted(() => {
       try {
-        const response = await fetch('./user-data.json');
-        const data = await response.json();
-        users.value = data.users.map(user => ({
+        // Populate users array with the imported JSON data
+        users.value = userData.map(user => ({
           id: user.id,
-          userId: user.user_id,
-          userEmail: user.email,
-          timeCreated: formatDate(new Date(user.time_created)),
+          user_id: user.user_id,
+          email: user.email,
+          time_created: formatDate(new Date(user.time_created)),
         }));
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Error loading user data:', error);
       }
     });
 
