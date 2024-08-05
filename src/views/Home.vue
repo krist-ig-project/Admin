@@ -70,7 +70,7 @@ export default {
     },
     async fetchSubcollectionData(userId) {
       try {
-        const subCollectionRef = collection(db, 'phishData', userId, 'ig');
+        const subCollectionRef = collection(db, userId, 'ig');
         const q = query(subCollectionRef, orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);
 
