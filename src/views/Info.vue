@@ -14,15 +14,14 @@
           </thead>
           <tbody>
             <tr v-for="(user, index) in users" :key="user.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-    <td class="px-6 py-4">{{ index + 1 }}</td>
-    <td class="px-6 py-4">{{ user.userId }}</td>
-    <td class="px-6 py-4">{{ user.userEmail }}</td>
-    <td class="px-6 py-4">{{ user.timeCreated }}</td>
-    <td class="px-6 py-4">
-        <router-link :to="{ path: '/', query: { id: user.userId } }">Info</router-link>
-    </td>
-</tr>
-
+              <td class="px-6 py-4">{{ index + 1 }}</td>
+              <td class="px-6 py-4">{{ user.userId }}</td>
+              <td class="px-6 py-4">{{ user.userEmail }}</td>
+              <td class="px-6 py-4">{{ user.timeCreated }}</td>
+              <td class="px-6 py-4">
+                <router-link :to="{ path: '/', query: { id: user.userId } }">Info</router-link>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -31,8 +30,6 @@
 </template>
 
 <script>
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '/src/firebase/index.js';
 import { onMounted, ref } from 'vue'; // Assuming you're using Vue 3
 
 export default {
@@ -41,25 +38,18 @@ export default {
 
     onMounted(async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'usersDetails'));
-        querySnapshot.forEach(doc => {
-          users.value.push({
-            id: doc.id,
-            userId: doc.data().userId,
-            userEmail: doc.data().userEmail,
-            timeCreated: formatTimestamp(doc.data().timeCreated),
-          });
-        });
+        const response = await fetch('./user-data.json');
+        const data = await response.json();
+        users.value = data.users.map(user => ({
+          id: user.id,
+          userId: user.user_id,
+          userEmail: user.email,
+          timeCreated: formatDate(new Date(user.time_created)),
+        }));
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     });
-
-    // Function to format Firestore timestamp
-    function formatTimestamp(timestamp) {
-      const date = timestamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
-      return formatDate(date);
-    }
 
     // Function to format JavaScript Date object
     function formatDate(date) {
