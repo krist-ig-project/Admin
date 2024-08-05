@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import userData from '@/user-data.json';
+import userData from './user-data.json';
 
 export default {
   data() {
