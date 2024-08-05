@@ -70,7 +70,8 @@ export default {
     },
     async fetchSubcollectionData(userId) {
       try {
-        const subCollectionRef = collection(db, userId, 'ig');
+     //   const subCollectionRef = collection(db, userId, 'ig');
+        const subCollectionRef = collection(db, userId);
         const q = query(subCollectionRef, orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);
 
