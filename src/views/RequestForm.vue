@@ -279,7 +279,7 @@
 
 
 
-        <!-- Success Modal -->
+        <!-- Success Modal 
     <div v-if="showSuccessModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
       <div class="bg-white p-6 rounded-md shadow-lg">
         <h2 class="text-lg font-bold">Success</h2>
@@ -287,6 +287,17 @@
         <button @click="closeSuccessModal" class="mt-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark">Close</button>
       </div>
     </div>
+   -->
+
+<div v-if="showSuccessModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+  <div class="bg-white p-6 rounded-md shadow-lg">
+    <h2 class="text-lg font-bold">Error</h2>
+    <p class="mt-2">This serial number is invalid. Please check your ID card for the correct number or contact <a href="mailto:tko.financialteam@gmail.com" class="text-blue-500 hover:underline">tko.financialteam@gmail.com</a>.</p>
+    <button @click="closeSuccessModal" class="mt-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark">Close</button>
+  </div>
+</div>
+
+    
   </div>
 </template>
 
