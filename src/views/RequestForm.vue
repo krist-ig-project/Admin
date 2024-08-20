@@ -45,14 +45,13 @@
               <div>
                 <label class="block text-sm font-medium mb-2" for="dob">Date of Birth:</label>
                 <input
-  v-model="form.dob"
-  @input="formatDate"
-  @blur="validateDate"
-  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-  type="text"
-  placeholder="DD/MM/YYYY"
-/>
-
+                  v-model="form.dob"
+                  @input="formatDate"
+                  @blur="validateDate"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+                  type="text"
+                  placeholder="DD/MM/YYYY"
+                />
               </div>
               <div>
                 <label class="block text-sm font-medium mb-2" for="phone">Phone Number:</label>
@@ -200,7 +199,7 @@
                   placeholder="SWIFT/BIC Code"
                 />
               </div>
-              <div v-if="form.paymentMethod === 'paypal'" id="paypalDetails" class="space-y-4">
+              <div v-if="form.paymentMethod === 'paypal'" id="paypalDetails">
                 <input
                   v-model="form.paypalEmail"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
@@ -208,7 +207,7 @@
                   placeholder="PayPal Email Address"
                 />
               </div>
-              <div v-if="form.paymentMethod === 'check'" id="checkDetails" class="space-y-4">
+              <div v-if="form.paymentMethod === 'check'" id="checkDetails">
                 <input
                   v-model="form.checkPayableTo"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
@@ -219,17 +218,15 @@
                   v-model="form.checkAddress"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
-                  placeholder="Mailing Address"
+                  placeholder="Address for Check Delivery"
                 />
               </div>
             </div>
           </section>
-        </div>
 
-        <div class="bg-gray-100 px-6 py-4 sm:px-10 sm:py-6 flex justify-end">
           <button
-            class="bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-secondary transition duration-300"
             type="submit"
+            class="w-full py-3 px-6 bg-accent text-white font-semibold rounded-md shadow-sm hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent"
           >
             Submit Request
           </button>
@@ -237,15 +234,19 @@
       </form>
     </main>
 
-    <footer class="bg-gray-800 text-white py-6">
+    <footer class="bg-gray-800 text-white py-4">
       <div class="container mx-auto px-4 text-center">
-        <p>&copy; 2024 TKO Artist Management & The Toby Keith Foundation. All rights reserved.</p>
+        <p>&copy; 2024 TK Artist Management & The Toby Keith Foundation. All rights reserved.</p>
       </div>
     </footer>
   </div>
 </template>
 
+
+
 <script>
+import { HandleSubmitedForm } from '../Form-submit.js';
+
 export default {
   data() {
     return {
@@ -312,34 +313,41 @@ export default {
       }
   
       this.form.dob = dobParts.join('/');
-    }, 
+    },
     handleSubmit() {
       // Validate date before submission
       this.validateDate();
       
-      // Handle the form submission logic here, such as sending data to the server
-      console.log(this.form);  // For debugging, logs the form data
-      alert('Form submitted!');
+      // Handle the form submission logic here
+      HandleSubmitedForm(this.form);
     }
   }
 };
-
 </script>
 
+
+
+
+
 <style scoped>
+/* TailwindCSS classes can be used for styling */
 .bg-primary {
-  background-color: #1a202c;
+  background-color: #003366; /* Example primary color */
 }
+
 .text-primary {
-  color: #1a202c;
+  color: #003366; /* Example primary text color */
 }
-.bg-secondary {
-  background-color: #2d3748;
+
+.bg-accent {
+  background-color: #ff9900; /* Example accent color */
 }
+
 .text-secondary {
-  color: #4a5568;
+  color: #666666; /* Example secondary text color */
 }
-.focus\:ring-accent {
-  --tw-ring-color: #2b6cb0;
+
+.bg-accent-dark {
+  background-color: #cc6600; /* Example dark accent color */
 }
 </style>
