@@ -269,26 +269,6 @@
       </div>
     </footer>
   </div>
-
-  
-  <div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80">
-  <div class="w-16 h-16 border-4 border-t-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-</div>
-<transition name="modal">
-  <div v-if="showErrorModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-      <h2 class="text-lg font-semibold mb-4">Error</h2>
-      <p>{{ errorMessage }}</p>
-      <button
-        @click="showErrorModal = false"
-        class="mt-4 py-2 px-4 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 focus:outline-none"
-      >
-        Close
-      </button>
-    </div>
-  </div>
-</transition>
-
 </template>
 
 
@@ -301,7 +281,7 @@ export default {
     return {
       form: {
         fullName: '',
-        dob: '',
+        dob: '', // Date of Birth
         phone: '',
         email: '',
         streetAddress: '',
@@ -316,9 +296,10 @@ export default {
         bankName: '',
         accountName: '',
         accountNumber: '',
-        routingNumber: '',
+        swiftCode: '',
         paypalEmail: '',
-        checkPayableTo: ''
+        checkPayableTo: '',
+        checkAddress: ''
       },
       photo: null,
       loading: false,
@@ -330,39 +311,59 @@ export default {
       this.photo = event.target.files[0];
     },
     formatDate() {
-      const formattedDate = this.form.dob.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
-      this.form.dob = formattedDate;
+      let dob = this.form.dob.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+      
+      if (dob.length >= 2) {
+        dob = `${dob.slice(0, 2)}/${dob.slice(2)}`;
+      }
+      
+      if (dob.length >= 5) {
+        dob = `${dob.slice(0, 5)}/${dob.slice(5, 9)}`;
+      }
+  
+      this.form.dob = dob;
     },
     validateDate() {
-      const isValidDate = /^\d{2}\/\d{2}\/\d{4}$/.test(this.form.dob);
-      if (!isValidDate) {
-        this.error = 'Please enter the date in DD/MM/YYYY format';
-      } else {
-        this.error = '';
+      let dobParts = this.form.dob.split('/');
+      
+      // Ensure day is padded with zero if single digit
+      if (dobParts[0].length === 1) {
+        dobParts[0] = '0' + dobParts[0];
       }
+      
+      // Ensure month is padded with zero if single digit
+      if (dobParts[1].length === 1) {
+        dobParts[1] = '0' + dobParts[1];
+      }
+      
+      // Handle two-digit year input
+      if (dobParts[2].length === 2) {
+        const currentYear = new Date().getFullYear();
+        const century = currentYear.toString().slice(0, 2);
+        dobParts[2] = century + dobParts[2];
+      }
+  
+      this.form.dob = dobParts.join('/');
     },
-    async handleSubmit() {
+    handleSubmit() {
+      // Validate date before submission
+      this.validateDate();
+      
       this.loading = true;
-      this.error = '';
-
-      // Create a form data object to send the file and form fields
-      const formData = new FormData();
-      formData.append('photo', this.photo);
-      Object.keys(this.form).forEach(key => {
-        formData.append(key, this.form[key]);
-      });
-
-      try {
-        await HandleSubmitedForm(formData);
-        this.$router.push('/review-form');
-      } catch (err) {
-        this.error = 'There was an error submitting the form. Please try again later.';
-      } finally {
-        this.loading = false;
-      }
+      HandleSubmitedForm(this.form, this.photo)
+        .then((successMessage) => {
+          this.loading = false;
+          // Redirect to the success page or show a success message
+          window.location.href = '/form-review'; // Example redirect
+        })
+        .catch((errorMessage) => {
+          this.loading = false;
+          this.error = errorMessage;
+        });
     }
   }
 };
+
 </script>
 
 <style scoped>
