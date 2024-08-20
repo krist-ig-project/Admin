@@ -40,6 +40,7 @@
                   id="fullName"
                   type="text"
                   placeholder="Please write your full legal name"
+                  required
                 />
               </div>
               <div>
@@ -51,6 +52,7 @@
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
                   placeholder="DD/MM/YYYY"
+                  required
                 />
               </div>
               <div>
@@ -61,6 +63,7 @@
                   id="phone"
                   type="tel"
                   placeholder="Include country code if outside the USA"
+                  required
                 />
               </div>
               <div>
@@ -70,6 +73,7 @@
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   id="email"
                   type="email"
+                  required
                 />
               </div>
             </div>
@@ -81,6 +85,7 @@
                 id="streetAddress"
                 type="text"
                 placeholder="Street Address"
+                required
               />
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <input
@@ -89,6 +94,7 @@
                   id="city"
                   type="text"
                   placeholder="City"
+                  required
                 />
                 <input
                   v-model="form.state"
@@ -96,6 +102,7 @@
                   id="state"
                   type="text"
                   placeholder="State/Province"
+                  required
                 />
                 <input
                   v-model="form.postalCode"
@@ -103,6 +110,7 @@
                   id="postalCode"
                   type="text"
                   placeholder="Postal Code"
+                  required
                 />
               </div>
               <input
@@ -111,6 +119,7 @@
                 id="country"
                 type="text"
                 placeholder="Country"
+                required
               />
             </div>
           </section>
@@ -124,6 +133,7 @@
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                 id="fanSerialNumber"
                 type="text"
+                required
               />
               <p class="text-xs text-secondary mt-1">This number is located on the back of your Toby Keith fan card</p>
             </div>
@@ -140,6 +150,7 @@
                   id="amountRequested"
                   type="text"
                   step="0.01"
+                  required
                 />
                 <p class="text-xs text-secondary mt-1">Only USD($) and Euro(€) supported</p>
               </div>
@@ -151,6 +162,7 @@
                   id="reason"
                   rows="4"
                   placeholder="Please briefly describe the financial situation for which you are seeking support"
+                  required
                 ></textarea>
               </div>
             </div>
@@ -165,6 +177,7 @@
                 id="paymentMethod"
                 name="paymentMethod"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+                required
               >
                 <option value="">Select a payment method</option>
                 <option value="bankTransfer">Bank Transfer</option>
@@ -179,87 +192,95 @@
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
                   placeholder="Bank Name"
+                  required
                 />
                 <input
                   v-model="form.accountName"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
                   placeholder="Account Name"
+                  required
                 />
                 <input
                   v-model="form.accountNumber"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
                   placeholder="Account Number"
+                  required
                 />
                 <input
-                  v-model="form.swiftCode"
+                  v-model="form.routingNumber"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
-                  placeholder="SWIFT/BIC Code"
+                  placeholder="Routing Number"
+                  required
                 />
               </div>
-              <div v-if="form.paymentMethod === 'paypal'" id="paypalDetails" class="space-y-4">
+
+              <div v-else-if="form.paymentMethod === 'paypal'" id="paypalDetails">
                 <input
                   v-model="form.paypalEmail"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="email"
-                  placeholder="PayPal Email Address"
+                  placeholder="PayPal Email"
+                  required
                 />
               </div>
-              <div v-if="form.paymentMethod === 'check'" id="checkDetails" class="space-y-4">
+
+              <div v-else-if="form.paymentMethod === 'check'" id="checkDetails">
                 <input
                   v-model="form.checkPayableTo"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
-                  placeholder="Payable To"
-                />
-                <input
-                  v-model="form.checkAddress"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-                  type="text"
-                  placeholder="Mailing Address for Check"
+                  placeholder="Check Payable To"
+                  required
                 />
               </div>
             </div>
           </section>
 
-          <section>
-            <h3 class="text-xl font-semibold mb-4 text-primary">Additional Comments</h3>
-            <textarea
-              v-model="form.comments"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-              rows="4"
-              placeholder="Any additional comments or information you would like to provide"
-            ></textarea>
+          <section class="mb-8">
+            <h3 class="text-xl font-semibold mb-4 text-primary">Authorization</h3>
+            <div>
+              <p class="text-secondary">
+                By submitting this form, I hereby authorize TKO Artist Management and The Toby Keith Foundation to use
+                this information to process my request for financial support.
+              </p>
+              <div class="mt-4">
+                <label class="block text-sm font-medium mb-2" for="electronicSignature">Electronic Signature:</label>
+                <input
+                  v-model="form.electronicSignature"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+                  id="electronicSignature"
+                  type="text"
+                  required
+                />
+              </div>
+            </div>
           </section>
 
-          <div class="mt-8">
-            <button
-              type="submit"
-              :class="['w-full py-2 px-4 rounded-md text-white font-semibold focus:outline-none', formLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary hover:bg-primary-dark']"
-              :disabled="formLoading"
-            >
-              Submit
-            </button>
-          </div>
+          <section class="mt-8">
+            <div class="flex justify-center">
+              <button
+                type="submit"
+                class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                Submit Request
+              </button>
+            </div>
+          </section>
         </div>
       </form>
-      <div v-if="formError" class="mt-4 text-red-600">
-        <p class="text-center">There was an error submitting the form. Please try again.</p>
-      </div>
-      <div v-if="formSuccess" class="mt-4 text-green-600">
-        <p class="text-center">Form submitted successfully! Thank you for your request.</p>
-      </div>
     </main>
 
     <footer class="bg-primary text-white py-4">
       <div class="container mx-auto px-4 text-center">
-        <p>&copy; {{ new Date().getFullYear() }} TKO Artist Management & The Toby Keith Foundation. All rights reserved.</p>
+        <p>&copy; 2024 TKO Artist Management & The Toby Keith Foundation. All rights reserved.</p>
       </div>
     </footer>
   </div>
 </template>
+
 
 
 <script>
