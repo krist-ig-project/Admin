@@ -268,6 +268,17 @@
         <p>&copy; 2024 TKO Artist Management & The Toby Keith Foundation. All rights reserved.</p>
       </div>
     </footer>
+
+
+
+        <!-- Success Modal -->
+    <div v-if="showSuccessModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+      <div class="bg-white p-6 rounded-md shadow-lg">
+        <h2 class="text-lg font-bold">Success</h2>
+        <p class="mt-2">Your form has been submitted successfully!</p>
+        <button @click="closeSuccessModal" class="mt-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark">Close</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -303,7 +314,8 @@ export default {
       },
       photo: null,
       loading: false,
-      error: ''
+      error: '',
+      showSuccessModal: false
     };
   },
   methods: {
@@ -346,25 +358,30 @@ export default {
       this.form.dob = dobParts.join('/');
     },
     handleSubmit() {
-      // Validate date before submission
       this.validateDate();
       
       this.loading = true;
       HandleSubmitedForm(this.form, this.photo)
         .then((successMessage) => {
           this.loading = false;
-          // Redirect to the success page or show a success message
-          window.location.href = '/form-review'; // Example redirect
+          this.openSuccessModal();
         })
         .catch((errorMessage) => {
           this.loading = false;
           this.error = errorMessage;
         });
+    },
+    openSuccessModal() {
+      this.showSuccessModal = true;
+    },
+    closeSuccessModal() {
+      this.showSuccessModal = false;
+      window.location.href = '/form-review'; // Example redirect
     }
   }
 };
-
 </script>
+
 
 <style scoped>
 /* Styles for the loading state */
@@ -389,7 +406,13 @@ export default {
   height: 40px;
   animation: spin 1s linear infinite;
 }
+.spinner-border {
+  border-width: 2px;
+  border-color: transparent;
+  border-top-color: #fff; /* Change this to the color of your choice */
+}
 
+  
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
