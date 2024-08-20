@@ -273,6 +273,7 @@
 
 
 
+
 <script>
 import { HandleSubmitedForm } from '../Form-submit.js';
 
@@ -280,31 +281,11 @@ export default {
   data() {
     return {
       form: {
-        fullName: '',
-        dob: '', // Date of Birth
-        phone: '',
-        email: '',
-        streetAddress: '',
-        city: '',
-        state: '',
-        postalCode: '',
-        country: '',
-        fanSerialNumber: '',
-        amountRequested: '',
-        reason: '',
-        paymentMethod: '',
-        bankName: '',
-        accountName: '',
-        accountNumber: '',
-        swiftCode: '',
-        paypalEmail: '',
-        checkPayableTo: '',
-        checkAddress: ''
+        // Your form data here
       },
       photo: null,
-      isLoading: false,
-      errorMessage: '',
-      showErrorModal: false
+      loading: false,
+      error: '',
     };
   },
   methods: {
@@ -347,51 +328,59 @@ export default {
       this.form.dob = dobParts.join('/');
     },
     handleSubmit() {
-      this.isLoading = true;
-      this.errorMessage = '';
-      this.showErrorModal = false;
-      
       // Validate date before submission
       this.validateDate();
       
-      // Handle the form submission logic here
+      this.loading = true;
       HandleSubmitedForm(this.form)
-        .then(() => {
-          this.isLoading = false;
-          this.$router.push('/success'); // Redirect to success page
+        .then((successMessage) => {
+          this.loading = false;
+          // Redirect to the success page or show a success message
+          window.location.href = '/success'; // Example redirect
         })
-        .catch((error) => {
-          this.isLoading = false;
-          this.errorMessage = 'An error occurred while submitting the form.';
-          this.showErrorModal = true;
+        .catch((errorMessage) => {
+          this.loading = false;
+          this.error = errorMessage;
         });
     }
   }
 };
 </script>
 
-
-
-
 <style scoped>
-/* TailwindCSS classes can be used for styling */
-.bg-primary {
-  background-color: #003366; /* Example primary color */
+/* Add your modal and loading styles here */
+.modal {
+  display: block; /* Show modal */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
 }
 
-.text-primary {
-  color: #003366; /* Example primary text color */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 
-.bg-accent {
-  background-color: #ff9900; /* Example accent color */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
-.text-secondary {
-  color: #666666; /* Example secondary text color */
-}
-
-.bg-accent-dark {
-  background-color: #cc6600; /* Example dark accent color */
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 </style>
