@@ -313,7 +313,7 @@ validateDate() {
   }
 
   this.form.dob = dobParts.join('/');
-}
+}, 
 
     handleSubmit() {
       // Handle the form submission logic here, such as sending data to the server
