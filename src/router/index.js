@@ -4,7 +4,9 @@ import FormReview from '../views/FormReview.vue';
 import RequestForm from '../views/RequestForm.vue';
 import AccessDeniedPage from '../views/AccessDeniedPage.vue';
 
-// Define routes
+// This variable represents the access control condition
+const CheckAccess = true; // Set this to false to allow access
+
 const routes = [
   {
     path: '/request-form',
@@ -35,13 +37,11 @@ const router = createRouter({
 
 // Global navigation guard
 router.beforeEach((to, from, next) => {
-  const CheckAccess = true; // Set this to control access
-
   if (CheckAccess) {
     // Redirect all paths to AccessDeniedPage if CheckAccess is true
     next({ name: 'access-denied' });
   } else {
-    // Allow navigation to all defined routes
+    // Allow navigation to all defined paths if CheckAccess is false
     next();
   }
 });
