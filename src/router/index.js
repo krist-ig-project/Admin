@@ -27,6 +27,16 @@ const router = createRouter({
       name: 'access-denied',
       component: AccessDeniedPage,
     },
+    // Uncomment the following route to redirect all paths to AccessDeniedPage
+     {
+      path: '/',
+      name: 'all-denied',
+      component: AccessDeniedPage,
+      beforeEnter: () => {
+      // Redirect all paths to AccessDeniedPage
+        return { name: 'access-denied' };
+       }
+    }
   ]
 });
 
