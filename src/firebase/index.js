@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAaret8RnokYQpBxaYML0U6J0Ewdq9g_AY",
-  authDomain: "letphish-1.firebaseapp.com",
-  projectId: "letphish-1",
-  storageBucket: "letphish-1.appspot.com",
-  messagingSenderId: "295369868266",
-  appId: "1:295369868266:web:bdfaebc5fdc8935304e893",
-  measurementId: "G-X4HBZLYHHE"
+    apiKey: "AIzaSyDw17LxaQjejQvqWkLpFfMeUMmQZjmctBM",
+  authDomain: "project-1-4a15c.firebaseapp.com",
+  projectId: "project-1-4a15c",
+  storageBucket: "project-1-4a15c.appspot.com",
+  messagingSenderId: "865393578378",
+  appId: "1:865393578378:web:e4bf6ef6291effa18c3873",
+  measurementId: "G-DT0NVBQE6C"
 };
 
 
