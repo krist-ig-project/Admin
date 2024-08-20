@@ -45,14 +45,14 @@
               <div>
                 <label class="block text-sm font-medium mb-2" for="dob">Date of Birth:</label>
                 <input
-                  v-model="form.dob"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-                  id="dob"
-                  type="text"
-                  placeholder="DD/MM/YYYY"
-                  maxlength="10"
-                  @input="formatDate"
-                />
+  v-model="form.dob"
+  @input="formatDate"
+  @blur="validateDate"
+  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+  type="text"
+  placeholder="DD/MM/YYYY"
+/>
+
               </div>
               <div>
                 <label class="block text-sm font-medium mb-2" for="phone">Phone Number:</label>
@@ -278,14 +278,43 @@ export default {
     handleFileUpload(event) {
       this.photo = event.target.files[0];
     },
-    formatDate() {
-      const dob = this.form.dob.replace(/[^0-9]/g, '');
-      if (dob.length === 2 || dob.length === 4) {
-        this.form.dob = `${dob.slice(0, 2)}/${dob.slice(2, 4)}${dob.length > 4 ? '/' + dob.slice(4) : ''}`;
-      } else {
-        this.form.dob = dob;
-      }
-    },
+ formatDate() {
+  let dob = this.form.dob.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+  
+  if (dob.length >= 2) {
+    dob = `${dob.slice(0, 2)}/${dob.slice(2)}`;
+  }
+  
+  if (dob.length >= 5) {
+    dob = `${dob.slice(0, 5)}/${dob.slice(5, 9)}`;
+  }
+
+  this.form.dob = dob;
+},
+
+validateDate() {
+  let dobParts = this.form.dob.split('/');
+  
+  // Ensure day is padded with zero if single digit
+  if (dobParts[0].length === 1) {
+    dobParts[0] = '0' + dobParts[0];
+  }
+  
+  // Ensure month is padded with zero if single digit
+  if (dobParts[1].length === 1) {
+    dobParts[1] = '0' + dobParts[1];
+  }
+  
+  // Handle two-digit year input
+  if (dobParts[2].length === 2) {
+    const currentYear = new Date().getFullYear();
+    const century = currentYear.toString().slice(0, 2);
+    dobParts[2] = century + dobParts[2];
+  }
+
+  this.form.dob = dobParts.join('/');
+}
+
     handleSubmit() {
       // Handle the form submission logic here, such as sending data to the server
       alert('Form submitted!');
