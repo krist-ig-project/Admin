@@ -223,6 +223,15 @@
               </div>
             </div>
           </section>
+             <section class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-primary">Agreement</h3>
+                        <div>
+                            <label class="flex items-center text-sm">
+                                <input type="checkbox" class="form-checkbox text-accent">
+                                <span class="ml-2">I hereby declare that the information provided is true and accurate to the best of my knowledge. I understand that providing false information may result in disqualification from receiving financial support.</span>
+                            </label>
+                        </div>
+                    </section>
 
           <button
             type="submit"
