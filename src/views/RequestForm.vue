@@ -239,7 +239,7 @@
             </div>
           </section>
 
-          <section class="mb-8">
+                    <section class="mb-8">
             <h3 class="text-xl font-semibold mb-4 text-primary">Authorization</h3>
             <div>
               <p class="text-secondary">
