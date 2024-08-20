@@ -1,19 +1,19 @@
 <template>
-  <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md mx-4">
-      <h1 class="text-2xl font-bold text-green-600 mb-4">Submission Successful!</h1>
+  <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white shadow-xl rounded-lg p-8 max-w-md mx-4">
+      <h1 class="text-3xl font-bold text-green-600 mb-6">Submission Successful!</h1>
       <p class="text-lg mb-4">
-        Your request has been submitted successfully. We will get back to you shortly after reviewing your submission.
+        Your request has been successfully submitted. Our team will review it and get back to you shortly.
       </p>
-      <p class="text-lg">
-        You will receive further updates through the email you provided.
+      <p class="text-lg mb-6">
+        You will receive further updates through the email address you provided.
       </p>
-      <div class="mt-6 text-center">
+      <div class="mt-8 text-center">
         <router-link
           to="/"
-          class="inline-block px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+          class="inline-block px-6 py-3 bg-primary text-white rounded-md shadow-md hover:bg-primary-dark transition duration-300 ease-in-out"
         >
-          Go to Homepage
+          Return to Homepage
         </router-link>
       </div>
     </div>
@@ -28,9 +28,18 @@ export default {
 
 <style scoped>
 .bg-primary {
-  background-color: #3490dc; /* Primary color */
+  background-color: #007bff; /* Primary color */
 }
 .bg-primary-dark {
-  background-color: #2779bd; /* Darker shade of primary color */
+  background-color: #0056b3; /* Darker shade of primary color */
+}
+.text-green-600 {
+  color: #38a169; /* Green text color */
+}
+.bg-gray-100 {
+  background-color: #f7fafc; /* Light gray background */
+}
+.shadow-xl {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 </style>
