@@ -435,4 +435,21 @@ export default {
   border-radius: 4px;
   cursor: pointer;
 }
+
+  
+.bg-primary {
+  background-color: #1a202c;
+}
+.text-primary {
+  color: #1a202c;
+}
+.bg-secondary {
+  background-color: #2d3748;
+}
+.text-secondary {
+  color: #4a5568;
+}
+.focus\:ring-accent {
+  --tw-ring-color: #2b6cb0;
+}
 </style>
