@@ -13,20 +13,24 @@ export function HandleSubmitedForm(formData, photo) {
   };
 
   // First, upload the photo if provided
-  return uploadPhoto(photo)
-    .then((photoURL) => {
-      // Add the photo URL to the form data
-      formData.photoURL = photoURL;
+  const handlePhotoUpload = photo
+    ? uploadPhoto(photo).then((photoURL) => {
+        // Add the photo URL to the form data
+        formData.photoURL = photoURL;
+      })
+    : Promise.resolve();
 
+  return handlePhotoUpload
+    .then(() => {
       // Then, save the form data to Firestore
       return addDoc(formCollectionRef, formData);
     })
     .then(() => {
       // Successfully added document with the image URL
-      return Promise.resolve('Form submitted successfully with photo!');
+      return Promise.resolve('Form submitted successfully!');
     })
     .catch((error) => {
-      // Error occurred while uploading the photo or saving the document
+      console.error('Error during form submission:', error); // Log error for debugging
       const errorMessage = error.message || 'An unexpected error occurred. Please try again later.';
       return Promise.reject(errorMessage);
     });
