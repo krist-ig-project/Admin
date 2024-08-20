@@ -235,7 +235,7 @@
 
           <button
             type="submit"
-            class="w-full py-3 px-6 bg-accent text-white font-semibold rounded-md shadow-sm hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent"
+            class="w-full py-3 px-6 bg-blue-800 text-white font-semibold rounded-md shadow-sm hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent"
           >
             Submit Request
           </button>
