@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import Info from '../views/Info.vue';
+import FormReview from '../FormReview.vue';
 import RequestForm from '../views/RequestForm.vue';
 
 const router = createRouter({
@@ -14,13 +14,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home, // Use the imported Home component
-      props: (route) => ({ id: route.query.id }),
+      component: Home,
     },
     {
-      path: '/info',
-      name: 'info',
-      component: Info // Use the imported Info component
+      path: '/form-review',
+      name: 'FormReview',
+      component: FormReview // Use the imported Info component
     },
   ]
 });
