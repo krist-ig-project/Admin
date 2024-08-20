@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <header class="bg-primary text-white py-6">
+    <header class="bg-gray-800 text-white py-6">
       <div class="container mx-auto px-4">
         <h1 class="text-3xl font-bold">TKO Financial Management Portal</h1>
         <h2 class="text-xl mt-2">Exclusive Access Only</h2>
@@ -10,21 +10,35 @@
     <main class="flex-grow container mx-auto px-4 py-8">
       <section class="bg-white shadow-lg rounded-lg overflow-hidden">
         <div class="p-6 sm:p-10">
-          <h3 class="text-xl font-semibold mb-4 text-primary">Welcome to TKO Financial Management Portal</h3>
+          <h3 class="text-xl font-semibold mb-4 text-primary">Welcome to the TKO Financial Management Portal</h3>
           <p class="text-lg mb-6">
-            This portal is designed exclusively for authorized individuals who have been granted access to manage and review financial information related to TKO. Our goal is to provide a secure, efficient, and transparent platform for financial management and support.
+            This portal is designed exclusively for authorized individuals who have been granted access to manage and review financial information related to TKO. As a secure and private platform, it offers an array of tools and resources tailored to meet your financial management needs.
           </p>
           <p class="text-lg mb-6">
-            As a member of this private network, you have the privilege of accessing sensitive financial resources, including request forms, financial reports, and personalized support options. We prioritize the confidentiality and security of all financial data, ensuring that it is only accessible to those with authorized permissions.
+            <strong>Features:</strong>
+            <ul class="list-disc list-inside pl-5">
+              <li>Access to comprehensive financial reports and analytics</li>
+              <li>Submission and tracking of financial support requests</li>
+              <li>Secure document upload and management</li>
+              <li>Personalized support and consultation services</li>
+            </ul>
           </p>
           <p class="text-lg mb-6">
-            If you require assistance or have any questions regarding your access, please contact our support team at <a href="mailto:support@tko-financial.com" class="text-accent hover:underline">support@tko-financial.com</a>. We are here to help and ensure that you have a seamless experience on our platform.
+            <strong>Important Notes:</strong>
+            <ul class="list-disc list-inside pl-5">
+              <li>Only authorized users with valid credentials can access this portal.</li>
+              <li>All financial data is encrypted and securely stored to protect confidentiality.</li>
+              <li>Please ensure that you follow all security protocols and guidelines provided.</li>
+            </ul>
           </p>
           <p class="text-lg mb-6">
-            Please note that any unauthorized access or attempts to bypass security measures will result in immediate suspension of access and potential legal action.
+            If you encounter any issues or have questions regarding your access or usage of the portal, please reach out to our support team at <a href="mailto:support@tko-financial.com" class="text-accent hover:underline">support@tko-financial.com</a>. We are committed to providing timely assistance and ensuring that your experience is seamless and efficient.
           </p>
           <p class="text-lg mb-6">
-            Thank you for your cooperation and commitment to maintaining the integrity of our financial management system.
+            Unauthorized access or misuse of the portal will result in immediate suspension of access and could lead to legal consequences. We appreciate your understanding and adherence to our privacy and security measures.
+          </p>
+          <p class="text-lg mb-6">
+            Thank you for being a valued member of our financial management community. We look forward to supporting you and ensuring the success of your financial endeavors.
           </p>
         </div>
       </section>
