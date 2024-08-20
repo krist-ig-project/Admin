@@ -251,12 +251,20 @@
 
           <section class="mt-8">
             <div class="flex justify-center">
-              <button
-                type="submit"
-                class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-accent"
-              >
-                Submit Request
-              </button>
+            
+              
+              <!-- Submit Button -->
+      <button
+        type="submit"
+        :disabled="loading"
+        class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-accent flex items-center justify-center"
+      >
+        <span v-if="loading" class="spinner-border animate-spin border-t-2 border-white border-solid rounded-full w-5 h-5 mr-2"></span>
+        <span v-if="!loading">Submit Request</span>
+      </button>
+
+
+              
             </div>
           </section>
         </div>
@@ -376,7 +384,7 @@ export default {
     },
     closeSuccessModal() {
       this.showSuccessModal = false;
-      window.location.href = '/form-review'; // Example redirect
+    //  window.location.href = '/form-review'; // Example redirect
     }
   }
 };
