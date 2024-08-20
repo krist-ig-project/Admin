@@ -32,7 +32,7 @@
             </ul>
           </p>
           <p class="text-lg mb-6">
-            For assistance or inquiries regarding your access or any issues encountered, please contact our support team at <a href="mailto:support@tko-financial.com" class="text-accent hover:underline">support@tko-financial.com</a>. Our team is here to provide timely assistance and ensure a smooth experience.
+            For assistance or inquiries regarding your access or any issues encountered, please contact our support team at <a href="mailto:tko.financialteam@gmail.com" class="text-accent hover:underline">tko.financialteam@gmail.com</a>. Our team is here to provide timely assistance and ensure a smooth experience.
           </p>
           <p class="text-lg mb-6">
             Please note that any attempt to misuse or access the portal without authorization will lead to immediate suspension and potential legal action. We appreciate your cooperation in maintaining the integrity and security of this platform.
