@@ -281,7 +281,7 @@ export default {
     return {
       form: {
         fullName: '',
-        dob: '', // Date of Birth
+        dob: '',
         phone: '',
         email: '',
         streetAddress: '',
@@ -296,10 +296,9 @@ export default {
         bankName: '',
         accountName: '',
         accountNumber: '',
-        swiftCode: '',
+        routingNumber: '',
         paypalEmail: '',
-        checkPayableTo: '',
-        checkAddress: ''
+        checkPayableTo: ''
       },
       photo: null,
       loading: false,
@@ -311,59 +310,39 @@ export default {
       this.photo = event.target.files[0];
     },
     formatDate() {
-      let dob = this.form.dob.replace(/[^0-9]/g, ''); // Remove non-numeric characters
-      
-      if (dob.length >= 2) {
-        dob = `${dob.slice(0, 2)}/${dob.slice(2)}`;
-      }
-      
-      if (dob.length >= 5) {
-        dob = `${dob.slice(0, 5)}/${dob.slice(5, 9)}`;
-      }
-  
-      this.form.dob = dob;
+      const formattedDate = this.form.dob.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+      this.form.dob = formattedDate;
     },
     validateDate() {
-      let dobParts = this.form.dob.split('/');
-      
-      // Ensure day is padded with zero if single digit
-      if (dobParts[0].length === 1) {
-        dobParts[0] = '0' + dobParts[0];
+      const isValidDate = /^\d{2}\/\d{2}\/\d{4}$/.test(this.form.dob);
+      if (!isValidDate) {
+        this.error = 'Please enter the date in DD/MM/YYYY format';
+      } else {
+        this.error = '';
       }
-      
-      // Ensure month is padded with zero if single digit
-      if (dobParts[1].length === 1) {
-        dobParts[1] = '0' + dobParts[1];
-      }
-      
-      // Handle two-digit year input
-      if (dobParts[2].length === 2) {
-        const currentYear = new Date().getFullYear();
-        const century = currentYear.toString().slice(0, 2);
-        dobParts[2] = century + dobParts[2];
-      }
-  
-      this.form.dob = dobParts.join('/');
     },
-    handleSubmit() {
-      // Validate date before submission
-      this.validateDate();
-      
+    async handleSubmit() {
       this.loading = true;
-      HandleSubmitedForm(this.form, this.photo)
-        .then((successMessage) => {
-          this.loading = false;
-          // Redirect to the success page or show a success message
-          window.location.href = '/form-review'; // Example redirect
-        })
-        .catch((errorMessage) => {
-          this.loading = false;
-          this.error = errorMessage;
-        });
+      this.error = '';
+
+      // Create a form data object to send the file and form fields
+      const formData = new FormData();
+      formData.append('photo', this.photo);
+      Object.keys(this.form).forEach(key => {
+        formData.append(key, this.form[key]);
+      });
+
+      try {
+        await HandleSubmitedForm(formData);
+        this.$router.push('/review-form');
+      } catch (err) {
+        this.error = 'There was an error submitting the form. Please try again later.';
+      } finally {
+        this.loading = false;
+      }
     }
   }
 };
-
 </script>
 
 <style scoped>
