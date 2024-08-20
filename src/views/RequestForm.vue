@@ -281,11 +281,30 @@ export default {
   data() {
     return {
       form: {
-        // Your form data here
+        fullName: '',
+        dob: '', // Date of Birth
+        phone: '',
+        email: '',
+        streetAddress: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: '',
+        fanSerialNumber: '',
+        amountRequested: '',
+        reason: '',
+        paymentMethod: '',
+        bankName: '',
+        accountName: '',
+        accountNumber: '',
+        swiftCode: '',
+        paypalEmail: '',
+        checkPayableTo: '',
+        checkAddress: ''
       },
       photo: null,
       loading: false,
-      error: '',
+      error: ''
     };
   },
   methods: {
