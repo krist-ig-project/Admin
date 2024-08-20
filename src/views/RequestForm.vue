@@ -199,7 +199,7 @@
                   placeholder="SWIFT/BIC Code"
                 />
               </div>
-              <div v-if="form.paymentMethod === 'paypal'" id="paypalDetails">
+              <div v-if="form.paymentMethod === 'paypal'" id="paypalDetails" class="space-y-4">
                 <input
                   v-model="form.paypalEmail"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
@@ -207,71 +207,59 @@
                   placeholder="PayPal Email Address"
                 />
               </div>
-              <div v-if="form.paymentMethod === 'check'" id="checkDetails">
+              <div v-if="form.paymentMethod === 'check'" id="checkDetails" class="space-y-4">
                 <input
                   v-model="form.checkPayableTo"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
-                  placeholder="Check Payable To"
+                  placeholder="Payable To"
                 />
                 <input
                   v-model="form.checkAddress"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   type="text"
-                  placeholder="Address for Check Delivery"
+                  placeholder="Mailing Address for Check"
                 />
               </div>
             </div>
           </section>
-             <section class="mb-8">
-                        <h3 class="text-xl font-semibold mb-4 text-primary">Agreement</h3>
-                        <div>
-                            <label class="flex items-center text-sm">
-                                <input type="checkbox" class="form-checkbox text-accent">
-                                <span class="ml-2">I hereby declare that the information provided is true and accurate to the best of my knowledge. I understand that providing false information may result in disqualification from receiving financial support.</span>
-                            </label>
-                        </div>
-                    </section>
 
-          <button
-            type="submit"
-            class="w-full py-3 px-6 bg-blue-800 text-white font-semibold rounded-md shadow-sm hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent"
-          >
-            Submit Request
-          </button>
+          <section>
+            <h3 class="text-xl font-semibold mb-4 text-primary">Additional Comments</h3>
+            <textarea
+              v-model="form.comments"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+              rows="4"
+              placeholder="Any additional comments or information you would like to provide"
+            ></textarea>
+          </section>
+
+          <div class="mt-8">
+            <button
+              type="submit"
+              :class="['w-full py-2 px-4 rounded-md text-white font-semibold focus:outline-none', formLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-primary hover:bg-primary-dark']"
+              :disabled="formLoading"
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </form>
+      <div v-if="formError" class="mt-4 text-red-600">
+        <p class="text-center">There was an error submitting the form. Please try again.</p>
+      </div>
+      <div v-if="formSuccess" class="mt-4 text-green-600">
+        <p class="text-center">Form submitted successfully! Thank you for your request.</p>
+      </div>
     </main>
 
-    <footer class="bg-gray-800 text-white py-4">
+    <footer class="bg-primary text-white py-4">
       <div class="container mx-auto px-4 text-center">
-        <p>&copy; 2024 TK Artist Management & The Toby Keith Foundation. All rights reserved.</p>
+        <p>&copy; {{ new Date().getFullYear() }} TKO Artist Management & The Toby Keith Foundation. All rights reserved.</p>
       </div>
     </footer>
-
-<div v-if="isLoading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80">
-  <div class="w-16 h-16 border-4 border-t-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-</div>
-
- <transition name="modal">
-  <div v-if="showErrorModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-      <h2 class="text-lg font-semibold mb-4">Error</h2>
-      <p>{{ errorMessage }}</p>
-      <button
-        @click="showErrorModal = false"
-        class="mt-4 py-2 px-4 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 focus:outline-none"
-      >
-        Close
-      </button>
-    </div>
-  </div>
-</transition>
-
   </div>
 </template>
-
-
 
 
 <script>
