@@ -30,17 +30,4 @@ const router = createRouter({
   ]
 });
 
-// Global Navigation Guard
-router.beforeEach((to, from, next) => {
-  const checkAccess = true; // Replace with your actual access check logic
-
-  if (checkAccess) {
-    // Redirect to AccessDeniedPage if the condition is true
-    next({ name: 'access-denied' });
-  } else {
-    // Allow navigation if the condition is false
-    next();
-  }
-});
-
 export default router;
