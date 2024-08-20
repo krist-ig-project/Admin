@@ -10,10 +10,11 @@ export function HandleSubmitedForm(formData) {
   return addDoc(formCollectionRef, formData)
     .then(() => {
       // Successfully added document
-      return Promise.resolve();
+      return Promise.resolve('Form submitted successfully!');
     })
     .catch((error) => {
       // Error occurred while adding document
-      return Promise.reject(error);
+      const errorMessage = error.message || 'An unexpected error occurred. Please try again later.';
+      return Promise.reject(errorMessage);
     });
 }
