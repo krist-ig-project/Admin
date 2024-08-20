@@ -138,7 +138,7 @@
                   v-model="form.amountRequested"
                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
                   id="amountRequested"
-                  type="number"
+                  type="text"
                   step="0.01"
                 />
                 <p class="text-xs text-secondary mt-1">Only USD($) and Euro(€) supported</p>
