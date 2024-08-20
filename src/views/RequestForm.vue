@@ -360,7 +360,7 @@ export default {
       this.validateDate();
       
       this.loading = true;
-      HandleSubmitedForm(this.form)
+      HandleSubmitedForm(this.form, this.photo)
         .then((successMessage) => {
           this.loading = false;
           // Redirect to the success page or show a success message
@@ -373,6 +373,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style scoped>
