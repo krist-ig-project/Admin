@@ -343,7 +343,7 @@ export default {
         .then((successMessage) => {
           this.loading = false;
           // Redirect to the success page or show a success message
-          window.location.href = '/request-form'; // Example redirect
+          window.location.href = '/form-review'; // Example redirect
         })
         .catch((errorMessage) => {
           this.loading = false;
